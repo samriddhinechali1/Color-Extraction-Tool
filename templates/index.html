@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Colour Palette Generator</title>
+    {% block styles %}
+            <!-- Bootstrap CSS -->
+            {{ bootstrap.load_css() }}
+    {% endblock %}
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css')}}" rel="stylesheet">
+  </head>
+  <body>
+  <header>
+    <nav>
+      <h1 class="logo">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo">
+      </h1>
+    </nav>
+  </header>
+    <section class="main">
+        <div class="mid-container">
+       <h1 class="heading">Image Color Extraction Tool</h1>
+      <p class="intro">This user-friendly image color extractor analyzes the colors in your uploaded image.
+          With just a click, you can effortlessly copy the HEX codes from the extracted color palette!</p>
+
+            {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+      <div class="img-show">
+        <div class="output-img">
+            <img id="output" src="{{ image }}">
+        </div>
+<!--        <div class="left">-->
+<!--          <form action="/" method="POST" enctype="multipart/form-data">-->
+<!--            <label for="file" style="cursor: pointer;">Choose Image:</label></p>-->
+<!--            <p><input type="file" accept="image/*" name="image" id="file" onchange="loadImage(event)" ></p>-->
+<!--            <label class="color-code">Select a color code:</label>-->
+<!--            <input type="radio"  name="color_code" value="rgb">RGB-->
+<!--            <input type="radio" name="color_code" value="hex">Hex-->
+<!--            <p><input type="submit" class="btn-btn-primary"></p>-->
+<!--          </form>-->
+<!--        </div>-->
+        <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Upload an Image</h2>
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="file" class="form-label">Choose Image:</label>
+                    <input type="file" accept="image/*" name="image" id="file" class="form-control" onchange="loadImage(event)">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Select a Color Code:</label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="color_code" id="rgb" value="rgb">
+                            <label class="form-check-label" for="rgb">RGB</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="color_code" id="hex" value="hex">
+                            <label class="form-check-label" for="hex">Hex</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center submit-btn">
+                    <button type="submit" class="btn btn-custom">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+        <div class="result">
+          {% if colors_list: %}
+            <div class="color-grid">
+            {% for i in range(colors_list | length): %}
+                <div class="color-div">
+                  {% if code != 'hex': %}
+                    <div class="color-box" style="background-color: rgb{{ colors_list[i]}}"></div>
+                    <div class="color-value">rgb{{colors_list[i]}}</div>
+                  <button class="btn btn-custom" onclick="copyToClipboard('rgb{{ colors_list[i] }}', this)">Copy</button>
+                   <div class="copied-message" style="display: none;">Copied!</div>
+                  {% else: %}
+                    <div class="color-box" style="background-color: #{{ colors_list[i]}}"></div>
+                    <div class="color-value"> #{{colors_list[i]}}</div>
+                    <button class="btn btn-custom" onclick="copyToClipboard('#{{ colors_list[i] }}', this)">Copy</button>
+                    <div class="copied-message" style="display: none;">Copied!</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+                </div>
+          {% endif %}
+        </div>
+      </div>
+        </div>
+    </section>
+  <footer>
+    <p>Copyright © {{ year  }}</p>
+  </footer>
+    <script>
+      let loadImage = function(event) {
+        let image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0])
+      };
+      function copyToClipboard(text, button) {
+        navigator.clipboard.writeText(text).then(function() {
+            // Change button text to "Copied!"
+            button.textContent = 'Copied!';
+
+        // Remove the div after 2000 milliseconds (2 seconds)
+        setTimeout(() => {
+           button.textContent = 'Copy';
+        }, 2000);
+    }, function(err) {
+        console.error("Could not copy text: ", err);
+    });
+    }
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
