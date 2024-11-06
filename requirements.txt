@@ -1,0 +1,5 @@
+Flask==2.2.3
+Flask-Bootstrap==5.2.3
+opencv-python==4.7.0.72
+numpy==1.24.2
+werkzeug==2.2.3
