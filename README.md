@@ -15,22 +15,23 @@ Follow these steps to run the project locally:
 
 ## Prerequisites
 Make sure you have Python 3 installed. Then, install the required dependencies by running:
-'''bash
+```bash
 pip install -r requirements.txt
+```
 ## Running the Application
 1.Clone this repository to your local machine:
-
-'''bash
+```bash
 git clone https://github.com/yourusername/image-color-extractor.git
 cd image-color-extractor
+```
 2. Install the necessary Python packages:
-
-'''bash
+```bash
 pip install -r requirements.txt
+```
 3. Run the application using Flask's built-in server:
-'''bash
+```bash
 python app.py
-
+```
 4. Visit the app in your browser at http://localhost:5000.
 
 ## How It Works
