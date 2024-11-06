@@ -109,34 +109,6 @@ def home():
     return render_template('index.html', image="/static/img/ccoral.png", error=error,colors_list=color_default, code= code_default,year=year)
 
 
-# @app.route("/try", methods=['GET', 'POST'])
-# def try_out():
-#     # color_default = get_colors("ccoral.png", "rgb")
-#     default_image_path = os.path.join(app.config['UPLOAD'], 'ccoral.png')
-#     color_default = get_colors(default_image_path, "hex")
-#     code_default = "hex"
-#     error = None
-#
-#     if request.method == 'POST':
-#         file = request.files['image']
-#         if not file:
-#             error = "No file uploaded"
-#         filename = secure_filename(file.filename)
-#
-#         if not filename.lower().endswith(('.png', '.jpg', '.jpeg')):
-#             error =  "Unsupported file type. Please upload a PNG or JPG image."
-#
-#         file.save(os.path.join(app.config['UPLOAD'], filename))
-#         image = os.path.join(app.config['UPLOAD'], filename)
-#         color_code = request.form.get('color_code', False)
-#         colors = get_colors(image, color_code)
-#
-#         return render_template('try.html', colors_list=colors,
-#                                code=color_code, image=image)
-#
-#     return render_template('try.html', image="/static/img/ccoral.png", error=error,colors_list=color_default ,code=code_default,year=year)
-
-
 @app.errorhandler(500)
 def handle_error(error):
     return render_template('index.html', error="An unexpected error occurred. Please try again."), 500
