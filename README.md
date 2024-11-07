@@ -21,7 +21,7 @@ pip install -r requirements.txt
 ## Running the Application
 1.Clone this repository to your local machine:
 ```bash
-git clone https://github.com/yourusername/image-color-extractor.git
+git clone https://github.com/samriddhinechali1/Color-Extraction-Tool.git
 cd image-color-extractor
 ```
 2. Install the necessary Python packages:
